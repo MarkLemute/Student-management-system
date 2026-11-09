@@ -33,3 +33,11 @@ Use Expo Go, an Android emulator, iOS simulator, or the web target. The prototyp
 - `src/hooks/useAppLifecycle.js` — lifecycle subscription.
 - `src/components/` — reusable header, navigation, and form controls.
 - `src/screens/` — login and feature screens.
+
+## Round 2 verification
+
+Run `npm install`, `npx expo install --check`, and `npx expo export --platform web`.
+The primary palette has been checked against white: navy `#0b3b60` is 11.61:1,
+teal `#087d74` is 5.00:1, ink `#123047` is 13.64:1, and error `#c43d4b`
+is 5.10:1 (WCAG AA). A real Android back button and screen-reader behavior
+still require device testing; web export validates bundling only.
