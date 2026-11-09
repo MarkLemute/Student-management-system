@@ -4,7 +4,7 @@ import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { AppHeader } from './src/components/AppHeader';
 import { BottomNavigation } from './src/components/BottomNavigation';
 import { defaultProfile } from './src/mockData';
-import { clearSession, loadProfile, loadSession, saveProfile, saveSession } from './src/storage';
+import { clearSession, loadLastSaved, loadProfile, loadSession, saveLastSaved, saveProfile, saveSession } from './src/storage';
 import { useAppLifecycle } from './src/hooks/useAppLifecycle';
 import { colors, styles } from './src/theme';
 import LoginScreen from './src/screens/LoginScreen';
@@ -24,9 +24,10 @@ export default function App() {
   const { appState } = useAppLifecycle();
 
   useEffect(() => {
-    Promise.all([loadProfile(), loadSession()])
-      .then(([savedProfile, session]) => {
+    Promise.all([loadProfile(), loadSession(), loadLastSaved()])
+      .then(([savedProfile, session, savedTimestamp]) => {
         if (savedProfile) setProfile({ ...defaultProfile, ...savedProfile });
+        if (savedTimestamp) setLastSaved(savedTimestamp);
         if (session) setScreen('home');
       })
       .catch(() => Alert.alert('Storage error', 'Your saved data could not be loaded.'))
@@ -59,6 +60,7 @@ export default function App() {
       setProfile(updatedProfile);
       const timestamp = new Date().toLocaleString();
       setLastSaved(timestamp);
+      await saveLastSaved(timestamp);
       Alert.alert('Profile saved', `Saved on this device at ${timestamp}.`);
     } catch {
       Alert.alert('Storage error', 'Your profile could not be saved.');
