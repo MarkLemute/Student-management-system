@@ -1,20 +1,35 @@
 # UEAB Student Hub
 
-A React Native Expo prototype for the Student Management Mobile Application assignment.
+UEAB Student Hub is a React Native/Expo student-management prototype with a preserved visual design and a maintainable `src` architecture.
 
-## Run the prototype
+## Run
 
-1. Install Node.js and Expo CLI prerequisites.
-2. From this directory run `npm install`.
-3. Run `npm start`, then open the project in Expo Go or an Android emulator.
+```bash
+npm install
+npx expo start
+```
 
-Use the prototype admin credentials: Student ID `SCHELE2211` and password `schele123`.
+Use Expo Go, an Android emulator, iOS simulator, or the web target. The prototype credentials are:
 
-## Implemented requirements
+- Student ID: `SCHELE2211`
+- Password: `schele123`
 
-- Login screen with required-field, student-ID, and password validation.
-- Home screen with profile, examination results, announcements, and course information.
-- Screen navigation using a bottom navigation bar and home quick-access cards.
-- Editable student profile.
-- `AsyncStorage` persistence for profile information across app restarts.
-- `AppState` listener and an active/background lifecycle indicator on the home screen.
+## Features
+
+- Validated login with persisted session and logout.
+- Five-tab navigation: Home, Results, Courses, Updates, and Profile.
+- Profile persistence through AsyncStorage, with validation, read-only student ID/programme/year fields, and a visible last-saved timestamp.
+- Credit-weighted GPA computed from the mock result data.
+- App lifecycle monitor using `AppState`.
+- Android back handling returns from a child tab to Home.
+- Keyboard-aware login and profile forms and safe-area support.
+
+## Architecture
+
+- `src/theme.js` — shared visual tokens and base styles.
+- `src/mockData.js` — prototype profile and academic data.
+- `src/storage.js` — AsyncStorage persistence boundary.
+- `src/validation.js` and `src/gpa.js` — pure validation and GPA logic.
+- `src/hooks/useAppLifecycle.js` — lifecycle subscription.
+- `src/components/` — reusable header, navigation, and form controls.
+- `src/screens/` — login and feature screens.
